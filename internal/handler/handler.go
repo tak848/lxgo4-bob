@@ -3,10 +3,12 @@ package handler
 import (
 	"context"
 	"errors"
+	"log/slog"
 	"net/http"
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/tak848/lxgo4-bob-playground/internal/oas"
 )
 
@@ -74,8 +76,8 @@ type UpdateTaskInput struct {
 type CommentService interface {
 	List(ctx context.Context, wsID, taskID uuid.UUID) ([]TaskCommentDTO, error)
 	Create(ctx context.Context, wsID, taskID, authorID uuid.UUID, body string) (*TaskCommentDTO, error)
-	Update(ctx context.Context, wsID, id uuid.UUID, body string) (*TaskCommentDTO, error)
-	Delete(ctx context.Context, wsID, id uuid.UUID) error
+	Update(ctx context.Context, wsID, taskID, id uuid.UUID, body string) (*TaskCommentDTO, error)
+	Delete(ctx context.Context, wsID, taskID, id uuid.UUID) error
 }
 
 type ReportService interface {
@@ -189,14 +191,34 @@ var _ oas.Handler = (*Handler)(nil)
 
 func (h *Handler) NewError(ctx context.Context, err error) *oas.ErrorResponseStatusCode {
 	code := http.StatusInternalServerError
-	if errors.Is(err, ErrNotFound) {
+	msg := "internal server error"
+	switch {
+	case errors.Is(err, ErrNotFound):
 		code = http.StatusNotFound
+		msg = "not found"
+	case isConstraintViolation(err):
+		code = http.StatusConflict
+		msg = "operation conflicts with existing data"
+	}
+	if code == http.StatusInternalServerError {
+		slog.ErrorContext(ctx, "unhandled error", "error", err)
 	}
 	return &oas.ErrorResponseStatusCode{
 		StatusCode: code,
 		Response: oas.ErrorResponse{
 			Code:    code,
-			Message: err.Error(),
+			Message: msg,
 		},
 	}
+}
+
+// isConstraintViolation は PostgreSQL の FK/unique 制約違反エラーを検出する。
+// pgx の *pgconn.PgError から SQLSTATE を取り出して判定する。
+func isConstraintViolation(err error) bool {
+	var pgErr *pgconn.PgError
+	if !errors.As(err, &pgErr) {
+		return false
+	}
+	// 23503: foreign_key_violation, 23505: unique_violation
+	return pgErr.Code == "23503" || pgErr.Code == "23505"
 }

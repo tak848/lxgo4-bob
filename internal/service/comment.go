@@ -60,10 +60,11 @@ func (s *CommentService) Create(ctx context.Context, wsID, taskID, authorID uuid
 	return &dto, nil
 }
 
-func (s *CommentService) Update(ctx context.Context, wsID, id uuid.UUID, body string) (*handler.TaskCommentDTO, error) {
+func (s *CommentService) Update(ctx context.Context, wsID, taskID, id uuid.UUID, body string) (*handler.TaskCommentDTO, error) {
 	ctx, exec := db.WorkspaceScopedExec(ctx, s.exec, wsID)
 	c, err := dbgen.TaskComments.Query(
 		dbgen.SelectWhere.TaskComments.ID.EQ(id),
+		dbgen.SelectWhere.TaskComments.TaskID.EQ(taskID),
 	).One(ctx, exec)
 	if err != nil {
 		return nil, wrapNotFound(err)
@@ -77,10 +78,11 @@ func (s *CommentService) Update(ctx context.Context, wsID, id uuid.UUID, body st
 	return &dto, nil
 }
 
-func (s *CommentService) Delete(ctx context.Context, wsID, id uuid.UUID) error {
+func (s *CommentService) Delete(ctx context.Context, wsID, taskID, id uuid.UUID) error {
 	ctx, exec := db.WorkspaceScopedExec(ctx, s.exec, wsID)
 	c, err := dbgen.TaskComments.Query(
 		dbgen.SelectWhere.TaskComments.ID.EQ(id),
+		dbgen.SelectWhere.TaskComments.TaskID.EQ(taskID),
 	).One(ctx, exec)
 	if err != nil {
 		return wrapNotFound(err)

@@ -9,7 +9,7 @@ export async function GET() {
   const entries = [];
 
   for (const file of files) {
-    if (!file.startsWith("bob-usage") || !file.endsWith(".md")) continue;
+    if (!file.includes("bob-usage") || !file.endsWith(".md")) continue;
     if (file === "bob-usage.md") continue;
 
     const content = await fs.readFile(path.join(DOCS_DIR, file), "utf-8");

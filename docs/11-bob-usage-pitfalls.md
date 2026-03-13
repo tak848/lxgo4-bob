@@ -32,7 +32,7 @@ dbgen.Tasks.Insert(&dbgen.TaskSetter{
 }).One(ctx, bobDB)
 ```
 
-詳細: [Factory Plugin](./bob-usage-factory.md)
+詳細: [Factory Plugin](./08-bob-usage-factory.md)
 
 ## 2. QueryHooks は queries plugin に効かない
 
@@ -54,7 +54,7 @@ SELECT ... FROM projects p
 WHERE p.workspace_id = $1  -- ← 必ず手動で書く
 ```
 
-詳細: [Queries Plugin](./bob-usage-queries-plugin.md)
+詳細: [Queries Plugin](./06-bob-usage-queries-plugin.md)
 
 ## 3. QueryHooks は INSERT に効かない
 
@@ -79,7 +79,7 @@ UNIQUE (workspace_id, id),
 FOREIGN KEY (workspace_id, project_id) REFERENCES projects(workspace_id, id)
 ```
 
-詳細: [QueryHooks](./bob-usage-hooks.md)
+詳細: [QueryHooks](./05-bob-usage-hooks.md)
 
 ## 4. omitnull の「未セット」と「NULL」の混同
 
@@ -106,7 +106,7 @@ nullVal.Null()
 setter.AssigneeID = nullVal
 ```
 
-詳細: [Nullable カラムの扱い](./bob-usage-nullable.md)
+詳細: [Nullable カラムの扱い](./07-bob-usage-nullable.md)
 
 ## 5. pgx と database/sql の間の変換が必要
 
@@ -125,7 +125,7 @@ sqlDB := stdlib.OpenDBFromPool(pool)
 bobDB := bob.NewDB(sqlDB)
 ```
 
-詳細: [DB 接続](./bob-usage-executor.md)
+詳細: [DB 接続](./09-bob-usage-executor.md)
 
 ## 6. bobgen の DSN と実行時の DSN の不一致
 
@@ -192,7 +192,7 @@ to-many には ThenLoad（別クエリ）を使う:
 dbgen.SelectThenLoad.Task.TaskComments()  // ← 別クエリで安全
 ```
 
-詳細: [リレーション](./bob-usage-relations.md)
+詳細: [リレーション](./04-bob-usage-relations.md)
 
 ## 9. bob.SkipHooks の存在に注意
 

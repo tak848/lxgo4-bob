@@ -131,6 +131,7 @@ mise run generate:api   # OpenAPI → TypeScript 型生成
 
 ## 関連リンク
 
+- [発表スライド: GoのDB アクセスにおける型安全と柔軟性の両立 ─ bob という選択肢](https://speakerdeck.com/tak848/gonodb-akusesuniokeru-xing-an-quan-to-rou-ruan-xing-noliang-li-bob-toiuxuan-ze-zhi)
 - [layerx.go #4](https://layerx.connpass.com/event/383847/)
 - [bob ORM](https://github.com/stephenafamo/bob)
 - [bob ドキュメント](https://bob.stephenafamo.com/)

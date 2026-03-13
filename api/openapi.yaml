@@ -5,7 +5,7 @@ info:
   version: "1.0.0"
 
 servers:
-  - url: http://localhost:18080
+  - url: http://localhost:8080
     description: Local development
 
 paths:
@@ -329,7 +329,10 @@ paths:
           $ref: "#/components/responses/ErrorResponse"
     put:
       operationId: updateTask
-      summary: Update a task
+      summary: Update a task (full replacement)
+      description: |
+        PUT semantics: all required fields must be sent.
+        Optional fields (assignee_id, due_date) that are omitted will be set to NULL.
       requestBody:
         required: true
         content:

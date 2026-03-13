@@ -28,7 +28,7 @@ func (h *Handler) CreateTaskComment(ctx context.Context, req *oas.CreateTaskComm
 }
 
 func (h *Handler) UpdateTaskComment(ctx context.Context, req *oas.UpdateTaskCommentRequest, params oas.UpdateTaskCommentParams) (*oas.TaskComment, error) {
-	c, err := h.Comments.Update(ctx, params.WsId, params.ID, req.Body)
+	c, err := h.Comments.Update(ctx, params.WsId, params.TaskId, params.ID, req.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +37,7 @@ func (h *Handler) UpdateTaskComment(ctx context.Context, req *oas.UpdateTaskComm
 }
 
 func (h *Handler) DeleteTaskComment(ctx context.Context, params oas.DeleteTaskCommentParams) error {
-	return h.Comments.Delete(ctx, params.WsId, params.ID)
+	return h.Comments.Delete(ctx, params.WsId, params.TaskId, params.ID)
 }
 
 func commentToOAS(c TaskCommentDTO) oas.TaskComment {

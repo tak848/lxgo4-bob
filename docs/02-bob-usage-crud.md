@@ -70,7 +70,7 @@ if input.AssigneeID != nil {
 - NULLABLE カラムの Setter は `omitnull.Val[T]` 型
 - `omitnull.From(v)` → 値をセット（NOT NULL として INSERT）
 - 未セットなら INSERT 文に含まれない（DB デフォルト）
-- 詳細は [Nullable カラムの扱い](./bob-usage-nullable.md) 参照
+- 詳細は [Nullable カラムの扱い](./07-bob-usage-nullable.md) 参照
 
 ## UPDATE
 
