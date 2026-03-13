@@ -1,0 +1,25 @@
+struct_tag_casing: snake
+tags: [json]
+plugins:
+  models:
+    destination: "internal/infra/dbgen"
+    pkgname: "dbgen"
+  enums:
+    destination: "internal/infra/dbgen/dbenums"
+  factory:
+    destination: "internal/infra/dbgen/factory"
+  where: {}
+  loaders: {}
+  joins: {}
+  dberrors: {}
+  dbinfo:
+    disabled: true
+psql:
+  dsn: "postgres://postgres:password@localhost:5432/taskman?sslmode=disable"
+  uuid_pkg: google
+  driver: "github.com/jackc/pgx/v5/stdlib"
+  queries:
+    - "./queries"
+  except:
+    schema_migrations: []
+    "*": [created_at, updated_at]

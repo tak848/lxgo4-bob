@@ -1,0 +1,35 @@
+# Binaries
+/server
+/seed
+*.exe
+
+# Dependencies
+node_modules/
+webapp/node_modules/
+
+# Next.js
+webapp/.next/
+webapp/out/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated OpenAPI client types
+webapp/src/lib/api/schema.d.ts
+
+# z/ is ignored via user's global gitignore

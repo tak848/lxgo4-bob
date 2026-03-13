@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -C webapp dev",
+    "build": "pnpm -C webapp build",
+    "lint": "pnpm -C webapp lint",
+    "generate:api": "pnpm -C webapp generate:api"
+  }
+}

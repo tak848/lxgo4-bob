@@ -1,0 +1,899 @@
+openapi: "3.0.3"
+info:
+  title: Taskman API
+  description: Multi-tenant task management API powered by bob ORM
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:18080
+    description: Local development
+
+paths:
+  /workspaces:
+    get:
+      operationId: listWorkspaces
+      summary: List all workspaces
+      responses:
+        "200":
+          description: List of workspaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Workspace"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    post:
+      operationId: createWorkspace
+      summary: Create a workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWorkspaceRequest"
+      responses:
+        "201":
+          description: Created workspace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+    get:
+      operationId: getWorkspace
+      summary: Get a workspace by ID
+      responses:
+        "200":
+          description: Workspace details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    put:
+      operationId: updateWorkspace
+      summary: Update a workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateWorkspaceRequest"
+      responses:
+        "200":
+          description: Updated workspace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    delete:
+      operationId: deleteWorkspace
+      summary: Delete a workspace
+      responses:
+        "204":
+          description: Workspace deleted
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/members:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+    get:
+      operationId: listMembers
+      summary: List members in a workspace
+      responses:
+        "200":
+          description: List of members
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Member"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    post:
+      operationId: createMember
+      summary: Add a member to a workspace
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMemberRequest"
+      responses:
+        "201":
+          description: Created member
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Member"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/members/{id}:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+      - $ref: "#/components/parameters/ResourceId"
+    get:
+      operationId: getMember
+      summary: Get a member by ID
+      responses:
+        "200":
+          description: Member details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Member"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    put:
+      operationId: updateMember
+      summary: Update a member
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMemberRequest"
+      responses:
+        "200":
+          description: Updated member
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Member"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    delete:
+      operationId: deleteMember
+      summary: Delete a member
+      responses:
+        "204":
+          description: Member deleted
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/projects:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+    get:
+      operationId: listProjects
+      summary: List projects in a workspace
+      responses:
+        "200":
+          description: List of projects with task stats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProjectWithStats"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    post:
+      operationId: createProject
+      summary: Create a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProjectRequest"
+      responses:
+        "201":
+          description: Created project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/projects/{id}:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+      - $ref: "#/components/parameters/ResourceId"
+    get:
+      operationId: getProject
+      summary: Get a project by ID
+      responses:
+        "200":
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    put:
+      operationId: updateProject
+      summary: Update a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProjectRequest"
+      responses:
+        "200":
+          description: Updated project
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    delete:
+      operationId: deleteProject
+      summary: Delete a project
+      responses:
+        "204":
+          description: Project deleted
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/tasks:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+    get:
+      operationId: listTasks
+      summary: List tasks with optional filters
+      parameters:
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/TaskStatus"
+        - name: priority
+          in: query
+          schema:
+            $ref: "#/components/schemas/TaskPriority"
+        - name: assignee_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: project_id
+          in: query
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        "200":
+          description: List of tasks with related names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TaskWithRelations"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    post:
+      operationId: createTask
+      summary: Create a task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskRequest"
+      responses:
+        "201":
+          description: Created task
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/tasks/{id}:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+      - $ref: "#/components/parameters/ResourceId"
+    get:
+      operationId: getTask
+      summary: Get a task by ID with full relations (project, assignee, comments)
+      responses:
+        "200":
+          description: Task detail with relations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskDetail"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    put:
+      operationId: updateTask
+      summary: Update a task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTaskRequest"
+      responses:
+        "200":
+          description: Updated task
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    delete:
+      operationId: deleteTask
+      summary: Delete a task
+      responses:
+        "204":
+          description: Task deleted
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/tasks/{taskId}/comments:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: listTaskComments
+      summary: List comments on a task
+      responses:
+        "200":
+          description: List of comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TaskComment"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    post:
+      operationId: createTaskComment
+      summary: Add a comment to a task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskCommentRequest"
+      responses:
+        "201":
+          description: Created comment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskComment"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/tasks/{taskId}/comments/{id}:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+      - name: taskId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - $ref: "#/components/parameters/ResourceId"
+    put:
+      operationId: updateTaskComment
+      summary: Update a comment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTaskCommentRequest"
+      responses:
+        "200":
+          description: Updated comment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskComment"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+    delete:
+      operationId: deleteTaskComment
+      summary: Delete a comment
+      responses:
+        "204":
+          description: Comment deleted
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/reports/project-stats:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+    get:
+      operationId: getProjectStats
+      summary: Get task statistics per project
+      responses:
+        "200":
+          description: Project statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProjectTaskStats"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/reports/member-summary:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+    get:
+      operationId: getMemberSummary
+      summary: Get task summary per member
+      responses:
+        "200":
+          description: Member task summaries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MemberTaskSummary"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+  /workspaces/{wsId}/reports/dashboard:
+    parameters:
+      - $ref: "#/components/parameters/WsId"
+    get:
+      operationId: getDashboard
+      summary: Get workspace dashboard overview
+      responses:
+        "200":
+          description: Dashboard data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardData"
+        default:
+          $ref: "#/components/responses/ErrorResponse"
+
+components:
+  parameters:
+    WsId:
+      name: wsId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ResourceId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+
+  responses:
+    ErrorResponse:
+      description: Error response
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+
+  schemas:
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+
+    MemberRole:
+      type: string
+      enum: [owner, editor, viewer]
+
+    ProjectStatus:
+      type: string
+      enum: [active, archived]
+
+    TaskStatus:
+      type: string
+      enum: [todo, in_progress, done]
+
+    TaskPriority:
+      type: string
+      enum: [low, medium, high, urgent]
+
+    Workspace:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+    CreateWorkspaceRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+
+    UpdateWorkspaceRequest:
+      type: object
+      required: [name]
+      properties:
+        name:
+          type: string
+
+    Member:
+      type: object
+      required: [id, workspace_id, name, email, role]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          $ref: "#/components/schemas/MemberRole"
+
+    CreateMemberRequest:
+      type: object
+      required: [name, email, role]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          $ref: "#/components/schemas/MemberRole"
+
+    UpdateMemberRequest:
+      type: object
+      required: [name, email, role]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          $ref: "#/components/schemas/MemberRole"
+
+    Project:
+      type: object
+      required: [id, workspace_id, name, description, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/ProjectStatus"
+
+    ProjectWithStats:
+      type: object
+      required: [id, workspace_id, name, description, status, total_tasks, done_tasks, active_tasks]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/ProjectStatus"
+        total_tasks:
+          type: integer
+          format: int64
+        done_tasks:
+          type: integer
+          format: int64
+        active_tasks:
+          type: integer
+          format: int64
+
+    CreateProjectRequest:
+      type: object
+      required: [name, description, status]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/ProjectStatus"
+
+    UpdateProjectRequest:
+      type: object
+      required: [name, description, status]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/ProjectStatus"
+
+    Task:
+      type: object
+      required: [id, workspace_id, project_id, title, description, status, priority]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        project_id:
+          type: string
+          format: uuid
+        assignee_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/TaskStatus"
+        priority:
+          $ref: "#/components/schemas/TaskPriority"
+        due_date:
+          type: string
+          format: date
+
+    TaskWithRelations:
+      type: object
+      required: [id, workspace_id, project_id, title, description, status, priority]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        project_id:
+          type: string
+          format: uuid
+        assignee_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/TaskStatus"
+        priority:
+          $ref: "#/components/schemas/TaskPriority"
+        due_date:
+          type: string
+          format: date
+        project_name:
+          type: string
+        assignee_name:
+          type: string
+
+    TaskDetail:
+      type: object
+      required: [id, workspace_id, project_id, title, description, status, priority, project, comments]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        project_id:
+          type: string
+          format: uuid
+        assignee_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/TaskStatus"
+        priority:
+          $ref: "#/components/schemas/TaskPriority"
+        due_date:
+          type: string
+          format: date
+        project:
+          $ref: "#/components/schemas/Project"
+        assignee:
+          $ref: "#/components/schemas/Member"
+        comments:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaskComment"
+
+    CreateTaskRequest:
+      type: object
+      required: [project_id, title, description, status, priority]
+      properties:
+        project_id:
+          type: string
+          format: uuid
+        assignee_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/TaskStatus"
+        priority:
+          $ref: "#/components/schemas/TaskPriority"
+        due_date:
+          type: string
+          format: date
+
+    UpdateTaskRequest:
+      type: object
+      required: [project_id, title, description, status, priority]
+      properties:
+        project_id:
+          type: string
+          format: uuid
+        assignee_id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          $ref: "#/components/schemas/TaskStatus"
+        priority:
+          $ref: "#/components/schemas/TaskPriority"
+        due_date:
+          type: string
+          format: date
+
+    TaskComment:
+      type: object
+      required: [id, workspace_id, task_id, author_id, body]
+      properties:
+        id:
+          type: string
+          format: uuid
+        workspace_id:
+          type: string
+          format: uuid
+        task_id:
+          type: string
+          format: uuid
+        author_id:
+          type: string
+          format: uuid
+        body:
+          type: string
+
+    CreateTaskCommentRequest:
+      type: object
+      required: [author_id, body]
+      properties:
+        author_id:
+          type: string
+          format: uuid
+        body:
+          type: string
+
+    UpdateTaskCommentRequest:
+      type: object
+      required: [body]
+      properties:
+        body:
+          type: string
+
+    ProjectTaskStats:
+      type: object
+      required: [id, name, total_tasks, done_tasks, active_tasks]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        total_tasks:
+          type: integer
+          format: int64
+        done_tasks:
+          type: integer
+          format: int64
+        active_tasks:
+          type: integer
+          format: int64
+
+    MemberTaskSummary:
+      type: object
+      required: [id, name, assigned_tasks, completed_tasks, overdue_tasks]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        assigned_tasks:
+          type: integer
+          format: int64
+        completed_tasks:
+          type: integer
+          format: int64
+        overdue_tasks:
+          type: integer
+          format: int64
+
+    DashboardData:
+      type: object
+      required: [project_count, member_count, total_tasks, done_tasks, overdue_tasks]
+      properties:
+        project_count:
+          type: integer
+          format: int64
+        member_count:
+          type: integer
+          format: int64
+        total_tasks:
+          type: integer
+          format: int64
+        done_tasks:
+          type: integer
+          format: int64
+        overdue_tasks:
+          type: integer
+          format: int64

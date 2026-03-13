@@ -1,0 +1,53 @@
+[tools]
+go = "1.26.1"
+node = "24.14.0"
+pnpm = "10.32.1"
+
+[tasks.up]
+description = "Start all Docker services"
+run = "docker compose up -d"
+
+[tasks.down]
+description = "Stop all Docker services"
+run = "docker compose down"
+
+[tasks.migrate]
+description = "Run database migrations"
+run = "go tool dbmate -d ./db/migrations -u \"${DATABASE_URL}\" up"
+
+[tasks.bobgen]
+description = "Generate bob ORM code from DB schema"
+run = "go tool bobgen-psql -c bobgen.yaml"
+
+[tasks.ogen]
+description = "Generate ogen server code from OpenAPI spec"
+run = "go tool ogen -target internal/oas -package oas -clean api/openapi.yaml"
+
+[tasks.seed]
+description = "Insert sample data"
+run = "go run ./cmd/seed/"
+
+[tasks.server]
+description = "Start API server"
+run = "go run ./cmd/server/"
+
+[tasks.dev]
+description = "Start frontend dev server"
+run = "pnpm dev"
+
+[tasks."generate:api"]
+description = "Generate TypeScript types from OpenAPI spec"
+run = "cd webapp && pnpm generate:api"
+
+[env]
+POSTGRES_PORT = "5432"
+POSTGRES_USER = "postgres"
+POSTGRES_PASSWORD = "password"
+POSTGRES_DB = "taskman"
+GRAFANA_PORT = "3000"
+LOKI_PORT = "3100"
+APP_PORT = "8080"
+WEBAPP_PORT = "3001"
+NEXT_PUBLIC_API_URL = "http://localhost:{{env.APP_PORT}}"
+DATABASE_URL = "postgres://{{env.POSTGRES_USER}}:{{env.POSTGRES_PASSWORD}}@localhost:{{env.POSTGRES_PORT}}/{{env.POSTGRES_DB}}?sslmode=disable"
+PSQL_DSN = "{{env.DATABASE_URL}}"
