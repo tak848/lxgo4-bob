@@ -1,4 +1,4 @@
-# lxgo4-bob-playground
+# lxgo4-bob
 
 [layerx.go #4](https://layerx.connpass.com/event/383847/) 向けのデモアプリケーション。
 
