@@ -9,9 +9,9 @@ import (
 	"github.com/stephenafamo/bob"
 	"github.com/stephenafamo/bob/dialect/psql/sm"
 
-	"github.com/tak848/lxgo4-bob-playground/internal/handler"
-	"github.com/tak848/lxgo4-bob-playground/internal/infra/db"
-	"github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen"
+	"github.com/tak848/lxgo4-bob/internal/handler"
+	"github.com/tak848/lxgo4-bob/internal/infra/db"
+	"github.com/tak848/lxgo4-bob/internal/infra/dbgen"
 )
 
 type CommentService struct {

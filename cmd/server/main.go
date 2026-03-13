@@ -12,11 +12,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tak848/lxgo4-bob-playground/internal/handler"
-	infradb "github.com/tak848/lxgo4-bob-playground/internal/infra/db"
-	"github.com/tak848/lxgo4-bob-playground/internal/infra/hook"
-	"github.com/tak848/lxgo4-bob-playground/internal/oas"
-	"github.com/tak848/lxgo4-bob-playground/internal/service"
+	"github.com/tak848/lxgo4-bob/internal/handler"
+	infradb "github.com/tak848/lxgo4-bob/internal/infra/db"
+	"github.com/tak848/lxgo4-bob/internal/infra/hook"
+	"github.com/tak848/lxgo4-bob/internal/oas"
+	"github.com/tak848/lxgo4-bob/internal/service"
 )
 
 func main() {

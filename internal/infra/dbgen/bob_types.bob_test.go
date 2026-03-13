@@ -9,7 +9,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/stephenafamo/bob"
-	enums "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen/dbenums"
+	enums "github.com/tak848/lxgo4-bob/internal/infra/dbgen/dbenums"
 )
 
 // Set the testDB to enable tests that use the database

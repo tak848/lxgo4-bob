@@ -11,10 +11,10 @@ import (
 	"github.com/aarondl/opt/omitnull"
 	"github.com/google/uuid"
 
-	infradb "github.com/tak848/lxgo4-bob-playground/internal/infra/db"
-	"github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen"
-	enums "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen/dbenums"
-	"github.com/tak848/lxgo4-bob-playground/internal/infra/hook"
+	infradb "github.com/tak848/lxgo4-bob/internal/infra/db"
+	"github.com/tak848/lxgo4-bob/internal/infra/dbgen"
+	enums "github.com/tak848/lxgo4-bob/internal/infra/dbgen/dbenums"
+	"github.com/tak848/lxgo4-bob/internal/infra/hook"
 )
 
 func main() {

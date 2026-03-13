@@ -9,8 +9,8 @@ import (
 
 	"github.com/aarondl/opt/null"
 	"github.com/google/uuid"
-	models "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen"
-	enums "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen/dbenums"
+	models "github.com/tak848/lxgo4-bob/internal/infra/dbgen"
+	enums "github.com/tak848/lxgo4-bob/internal/infra/dbgen/dbenums"
 )
 
 type Factory struct {

@@ -11,8 +11,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/jaswdr/faker/v2"
 	"github.com/stephenafamo/bob"
-	models "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen"
-	enums "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen/dbenums"
+	models "github.com/tak848/lxgo4-bob/internal/infra/dbgen"
+	enums "github.com/tak848/lxgo4-bob/internal/infra/dbgen/dbenums"
 )
 
 type ProjectMod interface {

@@ -23,7 +23,7 @@ import (
 	"github.com/stephenafamo/bob/mods"
 	"github.com/stephenafamo/bob/orm"
 	"github.com/stephenafamo/bob/types/pgtypes"
-	enums "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen/dbenums"
+	enums "github.com/tak848/lxgo4-bob/internal/infra/dbgen/dbenums"
 )
 
 // Task is an object representing the database table.

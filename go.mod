@@ -1,4 +1,4 @@
-module github.com/tak848/lxgo4-bob-playground
+module github.com/tak848/lxgo4-bob
 
 go 1.26.1
 

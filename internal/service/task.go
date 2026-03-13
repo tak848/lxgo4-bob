@@ -12,10 +12,10 @@ import (
 	"github.com/stephenafamo/bob/dialect/psql/dialect"
 	"github.com/stephenafamo/bob/dialect/psql/sm"
 
-	"github.com/tak848/lxgo4-bob-playground/internal/handler"
-	"github.com/tak848/lxgo4-bob-playground/internal/infra/db"
-	"github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen"
-	enums "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen/dbenums"
+	"github.com/tak848/lxgo4-bob/internal/handler"
+	"github.com/tak848/lxgo4-bob/internal/infra/db"
+	"github.com/tak848/lxgo4-bob/internal/infra/dbgen"
+	enums "github.com/tak848/lxgo4-bob/internal/infra/dbgen/dbenums"
 )
 
 type TaskService struct {

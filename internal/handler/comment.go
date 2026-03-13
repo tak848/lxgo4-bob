@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 
-	"github.com/tak848/lxgo4-bob-playground/internal/oas"
+	"github.com/tak848/lxgo4-bob/internal/oas"
 )
 
 func (h *Handler) ListTaskComments(ctx context.Context, params oas.ListTaskCommentsParams) ([]oas.TaskComment, error) {

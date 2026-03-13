@@ -11,7 +11,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/jaswdr/faker/v2"
 	"github.com/stephenafamo/bob"
-	models "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen"
+	models "github.com/tak848/lxgo4-bob/internal/infra/dbgen"
 )
 
 type TaskCommentMod interface {

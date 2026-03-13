@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/stephenafamo/bob"
-	models "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen"
-	factory "github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen/factory"
+	models "github.com/tak848/lxgo4-bob/internal/infra/dbgen"
+	factory "github.com/tak848/lxgo4-bob/internal/infra/dbgen/factory"
 )
 
 func TestTaskUniqueConstraintErrors(t *testing.T) {

@@ -7,8 +7,8 @@ import (
 	"github.com/google/uuid"
 	"github.com/stephenafamo/bob"
 
-	"github.com/tak848/lxgo4-bob-playground/internal/handler"
-	"github.com/tak848/lxgo4-bob-playground/queries"
+	"github.com/tak848/lxgo4-bob/internal/handler"
+	"github.com/tak848/lxgo4-bob/queries"
 )
 
 type ReportService struct {

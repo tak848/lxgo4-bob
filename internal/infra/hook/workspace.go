@@ -8,7 +8,7 @@ import (
 	"github.com/stephenafamo/bob/dialect/psql"
 	"github.com/stephenafamo/bob/dialect/psql/dialect"
 
-	infradb "github.com/tak848/lxgo4-bob-playground/internal/infra/db"
+	infradb "github.com/tak848/lxgo4-bob/internal/infra/db"
 )
 
 // WorkspaceSelectHook returns a QueryHook that appends

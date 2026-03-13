@@ -1,7 +1,7 @@
 package hook
 
 import (
-	"github.com/tak848/lxgo4-bob-playground/internal/infra/dbgen"
+	"github.com/tak848/lxgo4-bob/internal/infra/dbgen"
 )
 
 // RegisterHooks registers workspace-scoping query hooks on all tenant-scoped tables.

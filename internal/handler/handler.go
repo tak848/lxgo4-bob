@@ -9,7 +9,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgconn"
-	"github.com/tak848/lxgo4-bob-playground/internal/oas"
+	"github.com/tak848/lxgo4-bob/internal/oas"
 )
 
 type WorkspaceService interface {
